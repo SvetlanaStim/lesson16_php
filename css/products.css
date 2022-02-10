@@ -1,0 +1,21 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+}
+.product-container {
+}
+.content {
+    
+}
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+.card {
+    width: 30%;
+    border: 1px solid #1852f3;
+    margin: 10px auto;
+    padding: 15px;
+}
+.title {
+}

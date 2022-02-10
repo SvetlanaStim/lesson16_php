@@ -1,0 +1,32 @@
+body {
+    box-sizing: border-box;
+
+}
+.container {
+    display: block;
+    margin: 50px auto;
+    width: 300px;
+}
+.form-label {
+    display: block;
+    width: 100%;
+    display: flex;
+    margin: 5px;
+}
+.form-label input {
+    margin-left: auto;
+    margin-right: 5px;
+}
+.btn {
+    width: 100%;
+    background-color: #0a58ce;
+    color: #ffffff;
+    border-radius: 5px;
+    border: none;
+    height: 25px;
+    margin: 5px 0;
+}
+.btn:disabled {
+    background-color: #dadada;
+    color: #000000;
+}
