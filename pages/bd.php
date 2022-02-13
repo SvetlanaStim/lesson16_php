@@ -1,5 +1,5 @@
 <?php
-function connect($host='localhost', $user='mysql', $pass='mysql', $dbname='shop'){
+function connect($host='127.0.0.1:3307', $user='mysql', $pass='', $dbname='shop'){
     $link=mysqli_connect($host, $user, $pass);
     if (!$link) {
         echo "Connect failed: %s\n", mysqli_connect_error();
@@ -18,7 +18,7 @@ function getData($sql) {
     $arr=[];
     $res=mysqli_query($link, $sql);
     if (!$res) {
-        echo "<p>Произошла ошибка при выполнении запроса</p>";
+        echo "<p>Произошла ошибка при выполнении запроса 1</p>";
     } else {
         while($row = mysqli_fetch_assoc($res)) {
             $arr[]=$row;
@@ -31,7 +31,7 @@ function setData($sql) {
     $link=connect();
     $res=mysqli_query($link,$sql);
     if (!$res) {
-        echo "<p>Произошла ошибка при выполнении запроса</p>";
+        echo "<p>Произошла ошибка при выполнении запроса 2</p>";
     }
     return $res;
 }

@@ -2,19 +2,23 @@
 include_once 'pages/bd.php';
 $err=[];
 if (isset($_POST['btnreg'])) {
-    if (strlen($_POST['login']) < 3 or strlen($_POST['login']) > 20) {
+    if (strlen(trim($_POST['login'])) < 3 or strlen($_POST['login']) > 20) {
         $err[0]='Username is too short / long';
     }
-    if (strlen($_POST['password'])<6) $err[1]='Password is too short';
-
+    if (strlen(trim($_POST['password']))<6) $err[1]='Password is too short';
+    if (trim($_POST['name']) == '') $err[2]=true;
+    if (trim($_POST['surname']) == '') $err[3]=true;
+    if (trim($_POST['country']) == '') $err[4]=true;
+    if (trim($_POST['city']) == '') $err[5]=true;
+    if (trim($_POST['phone']) == '') $err[6]=true;
     if (count($err) == 0) {
         $sql="SELECT COUNT(*) AS 'count' FROM `user` WHERE `Login`='{$_POST['login']}';";
         $res=getData($sql);
-        if ($res[0]['count'] == 1) {
-            $err[7]='Пользователь с таким логином уже существует';
+        if ($res[0]['count'] === '1') {
+            $err[7]='Пользователь с таким логином уже существует';            
         } else {
             $sql="INSERT INTO `user`(`Name`, `Surname`, `Login`, `Password`, `Phone`, `Country`, `City`) VALUES ('{$_POST['name']}','{$_POST['surname']}','{$_POST['login']}','{$_POST['password']}','{$_POST['phone']}','{$_POST['country']}','{$_POST['city']}')";
-            // echo $sql;
+            var_dump($sql);
             $result=setData($sql);
             if ($result) header('Location: index.php?page=main');
             else echo "Не удалось сохранить данные. попробуйте позже";
@@ -38,26 +42,57 @@ if (isset($_POST['btnreg'])) {
 <div class="container">
     <form action="index.php?page=registration" method="POST">
         <label for="login" class="form-label">Логин:
-            <input type="text" name="login" id="login">            
+            <input type="text" name="login" id="login"
+            <?php
+                if ($err[0]) echo "placeholder = '$err[0]'>";
+                else echo "value='{$_POST['login']}'>";
+            ?>
         </label>
         <label for="password" class="form-label">Пароль:
-            <input type="password" name="password" id="password">
+            <input type="password" name="password" id="password"
+            <?php
+                if ($err[1]) echo "placeholder = '$err[1]'>";
+                else echo "value='{$_POST['password']}'>";
+            ?>
         </label>
         <label for="name" class="form-label">Имя:
-            <input type="text" name="name" id="name">
+            <input type="text" name="name" id="name"
+            <?php 
+                if($err[2]) echo "class='wrong'>";
+                else echo "value='{$_POST['name']}'>";
+            ?>
         </label>
         <label for="surname" class="form-label">Фамилия:
-            <input type="text" name="surname" id="surname">
+            <input type="text" name="surname" id="surname"
+            <?php 
+                if($err[3]) echo "class='wrong'>";
+                else echo "value='{$_POST['surname']}'>";
+            ?>
         </label>
         <label for="country" class="form-label">Страна:
-            <input type="text" name="country" id="country">
+            <input type="text" name="country" id="country"
+            <?php 
+                if($err[4]) echo "class='wrong'>";
+                else echo "value='{$_POST['country']}'>";
+            ?>
         </label>
         <label for="city" class="form-label">Город:
-            <input type="text" name="city" id="city">
+            <input type="text" name="city" id="city"
+            <?php 
+                if($err[5]) echo "class='wrong'>";
+                else echo "value='{$_POST['city']}'>";
+            ?>
         </label>
         <label for="phone" class="form-label">Телефон:
-            <input type="text" name="phone" id="phone">
+            <input type="text" name="phone" id="phone"
+            <?php 
+                if($err[6]) echo "class='wrong'>";
+                else echo "value='{$_POST['phone']}'>";
+            ?>
         </label>
+        <?php
+            if($err[7]) echo "<p>$err[7], <a href='index.php?page=login'>хотите войти?</a></p>";
+        ?>
         <input type="submit" class="btn" name="btnreg" id="btnreg" value="Зарегистрироваться" disabled>
     </form>
 </div>
