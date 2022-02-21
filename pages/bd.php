@@ -1,5 +1,5 @@
 <?php
-function connect($host='127.0.0.1:3307', $user='mysql', $pass='', $dbname='shop'){
+function connect($host='127.0.0.1:3306', $user='root', $pass='', $dbname='shop'){
     $link=mysqli_connect($host, $user, $pass);
     if (!$link) {
         echo "Connect failed: %s\n", mysqli_connect_error();
